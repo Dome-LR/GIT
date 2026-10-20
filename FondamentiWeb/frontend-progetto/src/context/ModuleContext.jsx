@@ -6,8 +6,7 @@ export function ModuleProvider({ children }) {
   const [activeModules, setActiveModules] = useState({
     calendar: true,
     habits: false,
-    timer: true,
-    shoppingList: true
+    timer: true
   });
 
   const toggleModule = (moduleName) => {

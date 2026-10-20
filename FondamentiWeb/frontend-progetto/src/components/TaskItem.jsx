@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ListGroup, Form, Badge } from 'react-bootstrap';
 
 export default function TaskItem({ title, isCompleted, type, time }) {
   
@@ -10,32 +11,32 @@ export default function TaskItem({ title, isCompleted, type, time }) {
   };
 
   return (
-    <div className="flex items-center justify-between p-3 mb-2 bg-white rounded shadow-sm border">
-      <div className="flex items-center gap-3">
-        <input 
-          type="checkbox" 
-          checked={checked} 
+    <ListGroup.Item className="d-flex justify-content-between align-items-center mb-2 shadow-sm">
+      <div className="d-flex align-items-center gap-3">
+        <Form.Check.Input
+          type="checkbox"
+          checked={checked}
           onChange={handleCheck}
-          className="w-5 h-5 cursor-pointer"
+          className="mt-0"
         />
-        
+
         {/* Titolo della task, che viene sbarrato se completata */}
-        <span className={checked ? "line-through text-gray-400" : "text-black"}>
+        <span className={checked ? 'text-decoration-line-through text-muted' : ''}>
           {title}
         </span>
       </div>
 
       {/* Sezione destra del componente: varia in base al tipo di task */}
-      <div className="flex items-center gap-2 text-sm text-gray-500">
+      <div className="d-flex align-items-center gap-2 small text-muted">
         {type === 'timer' && (
-          <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded">
-            ⏱ Timer
-          </span>
+          <Badge bg="primary-subtle" text="primary-emphasis">
+            [Timer]
+          </Badge>
         )}
         {type === 'scheduled' && (
           <span> {time}</span>
         )}
       </div>
-    </div>
+    </ListGroup.Item>
   );
 }

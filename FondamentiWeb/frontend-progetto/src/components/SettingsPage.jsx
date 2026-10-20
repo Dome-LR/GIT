@@ -1,71 +1,60 @@
 import React from 'react';
+import { Row, Col, Card, Button } from 'react-bootstrap';
 import { useModules } from '../context/ModuleContext';
+
+const MODULI = [
+  {
+    key: 'calendar',
+    titolo: '[Calendario] Calendario & Scadenze',
+    descrizione: 'Assegna una data di scadenza ai task, visualizzali nella pagina Calendario e traccia gli impegni futuri.',
+  },
+  {
+    key: 'timer',
+    titolo: '[Timer] Timer Focus',
+    descrizione: 'Imposta un timer in minuti per i tuoi task. Ideale per la tecnica del Pomodoro o sessioni di lavoro profondo.',
+  },
+  {
+    key: 'habits',
+    titolo: '[Abitudini] Tracker Abitudini',
+    descrizione: 'Crea task ricorrenti (giornalieri, settimanali, mensili) per costruire e mantenere nel tempo le tue nuove routine.',
+  },
+];
 
 export default function SettingsPage() {
   const { activeModules, toggleModule } = useModules();
 
   return (
-    <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-sm border mt-6">
-      <h1 className="text-3xl font-bold mb-2">Impostazioni Moduli</h1>
-      <p className="text-gray-500 mb-8">Personalizza la tua esperienza attivando solo ciò che ti serve.</p>
+    <Row className="justify-content-center">
+      <Col lg={8} xl={7}>
+        <Card className="shadow-sm">
+          <Card.Body className="p-4">
+            <h1 className="h2 fw-bold mb-2">Impostazioni Moduli</h1>
+            <p className="text-muted mb-4">
+              Personalizza la tua esperienza attivando solo le funzionalità che ti servono realmente per mantenere l'interfaccia pulita.
+            </p>
 
-      <div className="space-y-4">
-        
-        {/* Modulo Calendario */}
-        <div className="flex items-center justify-between p-4 bg-gray-50 rounded border">
-          <div>
-            <h3 className="font-semibold text-lg"> Calendario</h3>
-            <p className="text-sm text-gray-500">Pianifica le task nei giorni futuri</p>
-          </div>
-          <button 
-            onClick={() => toggleModule('calendar')}
-            className={`px-4 py-2 rounded font-medium transition-colors ${
-              activeModules.calendar 
-                ? 'bg-red-100 text-red-700 hover:bg-red-200' 
-                : 'bg-green-100 text-green-700 hover:bg-green-200'
-            }`}
-          >
-            {activeModules.calendar ? 'Disattiva' : 'Attiva'}
-          </button>
-        </div>
-
-        {/* Modulo Liste Spesa/Preferite */}
-        <div className="flex items-center justify-between p-4 bg-gray-50 rounded border">
-          <div>
-            <h3 className="font-semibold text-lg">🛒 Liste Aggiuntive</h3>
-            <p className="text-sm text-gray-500">Gestisci la spesa e altre liste personalizzate</p>
-          </div>
-          <button 
-            onClick={() => toggleModule('shoppingList')}
-            className={`px-4 py-2 rounded font-medium transition-colors ${
-              activeModules.shoppingList 
-                ? 'bg-red-100 text-red-700 hover:bg-red-200' 
-                : 'bg-green-100 text-green-700 hover:bg-green-200'
-            }`}
-          >
-            {activeModules.shoppingList ? 'Disattiva' : 'Attiva'}
-          </button>
-        </div>
-
-        {/* Modulo Habit Tracker */}
-        <div className="flex items-center justify-between p-4 bg-gray-50 rounded border">
-          <div>
-            <h3 className="font-semibold text-lg"> Tracker Abitudini</h3>
-            <p className="text-sm text-gray-500">Monitora le tue routine nel tempo</p>
-          </div>
-          <button 
-            onClick={() => toggleModule('habits')}
-            className={`px-4 py-2 rounded font-medium transition-colors ${
-              activeModules.habits 
-                ? 'bg-red-100 text-red-700 hover:bg-red-200' 
-                : 'bg-green-100 text-green-700 hover:bg-green-200'
-            }`}
-          >
-            {activeModules.habits ? 'Disattiva' : 'Attiva'}
-          </button>
-        </div>
-
-      </div>
-    </div>
+            <div className="d-flex flex-column gap-3">
+              {MODULI.map((modulo) => (
+                <Card key={modulo.key} className="bg-light shadow-sm">
+                  <Card.Body className="d-flex justify-content-between align-items-center gap-3">
+                    <div>
+                      <h3 className="h6 fw-semibold mb-1">{modulo.titolo}</h3>
+                      <p className="small text-muted mb-0">{modulo.descrizione}</p>
+                    </div>
+                    <Button
+                      variant={activeModules[modulo.key] ? 'outline-danger' : 'outline-success'}
+                      className="flex-shrink-0"
+                      onClick={() => toggleModule(modulo.key)}
+                    >
+                      {activeModules[modulo.key] ? 'Disattiva' : 'Attiva'}
+                    </Button>
+                  </Card.Body>
+                </Card>
+              ))}
+            </div>
+          </Card.Body>
+        </Card>
+      </Col>
+    </Row>
   );
 }
